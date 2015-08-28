@@ -5,6 +5,7 @@ defmodule ExDoc.Formatter.EPUB do
 
   alias ExDoc.Formatter.HTML
   alias ExDoc.Formatter.EPUB.Templates
+  import UUID, only: [uuid4: 1]
 
   @doc """
   Generate EPUB documentation for the given modules
