@@ -165,4 +165,17 @@ defmodule ExDoc.Formatter.EPUB do
   defp write_readme(_, _, _, _) do
     false
   end
+
+  # Helper to format Erlang datetime tuple
+  defp format_datetime do
+    {{year, month, day}, {hour, min, sec}} = :calendar.universal_time()
+    date = Enum.map_join([{year, 4}, {month, 2}, {day, 2}], "-", fn({k, v}) -> zero_pad(k, v) end)
+    time = Enum.map_join([{hour, 2}, {min, 2}, {sec, 2}], ":", fn({k, v}) -> zero_pad(k, v) end)
+    "#{date}T#{time}Z"
+  end
+
+  defp zero_pad(val, count) do
+    num = Integer.to_string(val)
+    :binary.copy("0", count - byte_size(num)) <> num
+  end
 end
