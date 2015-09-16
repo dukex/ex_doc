@@ -1,14 +1,6 @@
 defmodule ExDoc.Formatter.EPUBTest do
   use ExUnit.Case, async: false
 
-  alias ExDoc.Formatter.EPUB
-
-  setup_all do
-    {:ok, _} = File.copy("test/fixtures/README.md", "test/tmp/README.md")
-
-    :ok
-  end
-
   setup do
     {:ok, _} = File.rm_rf(output_dir)
     :ok = File.mkdir(output_dir)
@@ -33,7 +25,7 @@ defmodule ExDoc.Formatter.EPUBTest do
       output: "test/tmp/doc",
       source_root: beam_dir,
       source_beam: beam_dir,
-      readme: "test/tmp/README.md",
+      extras: ["test/fixtures/README.md"],
     ]
   end
 
@@ -132,7 +124,7 @@ defmodule ExDoc.Formatter.EPUBTest do
   end
 
   test "run should not generate the readme file" do
-    generate_docs_and_unzip(doc_config([readme: nil]))
+    generate_docs_and_unzip(doc_config([extras: []]))
 
     refute File.regular?("#{output_dir}/OEBPS/modules/README.html")
 
