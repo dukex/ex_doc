@@ -9,6 +9,6 @@
   </head>
   <body>
     <h1>README</h1>
-    <%= to_html(content) %>
+    <%= HTMLTemplates.to_html(content) %>
   </body>
 </html>

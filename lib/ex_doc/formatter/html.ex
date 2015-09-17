@@ -76,7 +76,7 @@ defmodule ExDoc.Formatter.HTML do
   end
 
   defp generate_assets(output, _config) do
-    Enum.each assets, fn({ pattern, dir }) ->
+    Enum.each assets, fn({pattern, dir}) ->
       output = "#{output}/#{dir}"
       File.mkdir output
 

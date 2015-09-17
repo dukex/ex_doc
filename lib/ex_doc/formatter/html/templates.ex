@@ -13,19 +13,25 @@ defmodule ExDoc.Formatter.HTML.Templates do
     module_template(config, node, types.types, types.functions, types.macros, types.callbacks, all)
   end
 
-  # Get the full specs from a function, already in HTML form.
-  defp get_specs(%ExDoc.FunctionNode{specs: specs}) when is_list(specs) do
+  @doc """
+  Get the full specs from a function, already in HTML form.
+  """
+  def get_specs(%ExDoc.FunctionNode{specs: specs}) when is_list(specs) do
     presence specs
   end
 
-  defp get_specs(_node), do: nil
+  def get_specs(_node), do: nil
 
-  # Convert markdown to HTML.
-  defp to_html(nil), do: nil
-  defp to_html(bin) when is_binary(bin), do: ExDoc.Markdown.to_html(bin)
+  @doc """
+  Convert markdown to HTML.
+  """
+  def to_html(nil), do: nil
+  def to_html(bin) when is_binary(bin), do: ExDoc.Markdown.to_html(bin)
 
-  # Get the pretty name of a function node
-  defp pretty_type(%ExDoc.FunctionNode{type: t}) do
+  @doc """
+  Get the pretty name of a function node
+  """
+  def pretty_type(%ExDoc.FunctionNode{type: t}) do
     case t do
       :def           -> "function"
       :defmacro      -> "macro"
@@ -35,9 +41,11 @@ defmodule ExDoc.Formatter.HTML.Templates do
     end
   end
 
-  # Generate a link id
-  defp link_id(node), do: link_id(node.id, node.type)
-  defp link_id(id, type) do
+  @doc """
+  Generate a link id
+  """
+  def link_id(node), do: link_id(node.id, node.type)
+  def link_id(id, type) do
     case type do
       :macrocallback -> "c:#{id}"
       :callback      -> "c:#{id}"
@@ -46,16 +54,18 @@ defmodule ExDoc.Formatter.HTML.Templates do
     end
   end
 
-  # Get the first paragraph of the documentation of a node, if any.
-  defp synopsis(nil), do: nil
-  defp synopsis(doc) do
+  @doc """
+  Get the first paragraph of the documentation of a node, if any.
+  """
+  def synopsis(nil), do: nil
+  def synopsis(doc) do
     String.split(doc, ~r/\n\s*\n/) |> hd |> String.strip() |> String.rstrip(?.)
   end
 
   defp presence([]),    do: nil
   defp presence(other), do: other
 
-  defp h(binary) do
+  def h(binary) do
     escape_map = [{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}, {"\"", "&quot;"}]
     Enum.reduce escape_map, binary, fn({pattern, escape}, acc) ->
       String.replace(acc, pattern, escape)
@@ -117,7 +127,7 @@ defmodule ExDoc.Formatter.HTML.Templates do
     ~s/{"id":"#{id}","anchor":"#{h anchor}"}/
   end
 
-  defp group_types(node) do
+  def group_types(node) do
     %{types: node.typespecs,
       functions: Enum.filter(node.docs, & &1.type in [:def]),
       macros: Enum.filter(node.docs, & &1.type in [:defmacro]),
