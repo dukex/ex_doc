@@ -1,4 +1,0 @@
-<tr>
-  <td class="summary-signature"><a href="#<%= HTMLTemplates.h node.id %>"><%= HTMLTemplates.h node.signature %></a></td>
-  <td class="summary-synopsis"><%= if node.doc do %><%= HTMLTemplates.to_html(HTMLTemplates.synopsis(node.doc)) %><% end %></td>
-</tr>

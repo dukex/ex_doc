@@ -4,17 +4,13 @@ defmodule ExDoc.Formatter.EPUB.Templates do
   """
 
   require EEx
-  alias ExDoc.Formatter.HTML.Templates, as: HTMLTemplates
+  alias ExDoc.Formatter.HTML.Templates, as: H
 
   @content_template_doc """
   Creates the [Package Document Definition](http://www.idpf.org/epub/30/spec/epub30-publications.html#sec-package-def),
   this definition encapsulates the publication metadata and the resource
   information that constitute the EPUB publication. This definition also
   includes the default reading order.
-  """
-  @detail_template_doc """
-  Returns the details of an individual *function*, *macro* or *callback*.  This
-  function is required used by `module_template/6`.
   """
   @module_template_doc """
   Creates a chapter which contains all the details about an individual module,
@@ -28,10 +24,6 @@ defmodule ExDoc.Formatter.EPUB.Templates do
   @extra_template_doc """
   Creates a new chapter when the user provides additional files.
   """
-  @summary_template_doc """
-  Creates a summary of the *functions* and *macros* available for an individual
-  module, this function is required by `module_template/6`.
-  """
   @title_template_doc """
   Creates the cover page for the EPUB document.
   """
@@ -40,16 +32,12 @@ defmodule ExDoc.Formatter.EPUB.Templates do
   this is for compatibility purposes with EPUB 2 Reading Systems.  EPUB 3
   Reading Systems must ignore the NCX in favor of the [EPUB Navigation Document](http://www.idpf.org/epub/30/spec/epub30-contentdocs.html#sec-xhtml-nav).
   """
-  @type_detail_template_doc """
-  Returns all the details of an individual *type*. This function is required by
-  `module_template/6`.
-  """
 
   @doc """
   Generate content from the module template for a given `node`
   """
   def module_page(config, node) do
-    types = HTMLTemplates.group_types(node)
+    types = H.group_types(node)
     module_template(config, node, types.types, types.functions, types.macros, types.callbacks)
   end
 
@@ -62,14 +50,11 @@ defmodule ExDoc.Formatter.EPUB.Templates do
 
   templates = [
     content_template: {[:config, :nodes, :uuid, :datetime], @content_template_doc},
-    detail_template: {[:node, :_module], @detail_template_doc},
     module_template: {[:config, :module, :types, :functions, :macros, :callbacks], @module_template_doc},
     nav_template: {[:config, :nodes], @nav_template_doc},
     extra_template: {[:config, :content], @extra_template_doc},
-    summary_template: {[:node], @summary_template_doc},
     title_template: {[:config], @title_template_doc},
     toc_template: {[:config, :nodes, :uuid], @toc_template_doc},
-    type_detail_template: {[:node], @type_detail_template_doc}
   ]
 
   Enum.each templates, fn({ name, {args, docs} }) ->

@@ -9,6 +9,6 @@
   </head>
   <body>
   <h1><%= extra_title(config.title) %></h1>
-    <%= HTMLTemplates.to_html(content) %>
+    <%= H.to_html(content) %>
   </body>
 </html>

@@ -81,7 +81,7 @@ defmodule ExDoc.Formatter.EPUB.TemplatesTest do
 
   test "module_page outputs summaries" do
     content = get_module_page([CompiledWithDocs])
-    assert content =~ ~r{<td class="summary-signature">\s*<a href="#example_1/0">}
+    assert content =~ ~r{<div class="summary-signature">\s*<a href="#example_1/0">}
   end
 
   test "module_page contains links to summary sections when those exist" do
@@ -93,12 +93,12 @@ defmodule ExDoc.Formatter.EPUB.TemplatesTest do
 
   test "module_page outputs behavior and callbacks" do
     content = get_module_page([CustomBehaviourOne])
-    assert content =~ ~r{<h1>\s*CustomBehaviourOne\s*\(behaviour\)\s*</h1>}m
+    assert content =~ ~r{<h1>\s*CustomBehaviourOne\s*<small>behaviour</small>\s*</h1>}m
     assert content =~ ~r{Callbacks}
     assert content =~ ~r{<div class="detail-header" id="c:hello/1">}
 
     content = get_module_page([CustomBehaviourTwo])
-    assert content =~ ~r{<h1>\s*CustomBehaviourTwo\s*\(behaviour\)\s*</h1>}m
+    assert content =~ ~r{<h1>\s*CustomBehaviourTwo\s*<small>behaviour</small>\s*</h1>}m
     assert content =~ ~r{Callbacks}
     assert content =~ ~r{<div class="detail-header" id="c:bye/1">}
   end
@@ -107,6 +107,6 @@ defmodule ExDoc.Formatter.EPUB.TemplatesTest do
 
   test "module_page outputs the protocol type" do
     content = get_module_page([CustomProtocol])
-    assert content =~ ~r{<h1>\s*CustomProtocol\s*\(protocol\)\s*}m
+    assert content =~ ~r{<h1>\s*CustomProtocol\s*<small>protocol</small>\s*}m
   end
 end

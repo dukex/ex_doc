@@ -1,8 +1,0 @@
-<div class="type-detail">
-  <p class="typespec" id="<%= HTMLTemplates.h HTMLTemplates.link_id(node) %>">
-    <%= node.spec %>
-  </p>
-  <%= if node.doc do %>
-      <div class="typespec-doc"><%= HTMLTemplates.to_html(node.doc) %></div>
-  <% end %>
-</div>
