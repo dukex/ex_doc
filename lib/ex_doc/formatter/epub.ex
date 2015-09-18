@@ -22,6 +22,10 @@ defmodule ExDoc.Formatter.EPUB do
     exceptions = HTML.filter_list(:exceptions, all)
     protocols = HTML.filter_list(:protocols, all)
 
+    if config.logo do
+      config = HTML.process_logo_metadata(config, "#{config.output}/OEBPS/assets")
+    end
+
     generate_extras(output, config, module_nodes)
 
     uuid = "urn:uuid:#{uuid4()}"

@@ -19,7 +19,7 @@
       </navLabel>
       <content src="title.html"/>
     </navPoint>
-    <%= for {extra, index} <- config.extras |> Enum.sort |> Enum.with_index do %>
+    <%= for {extra, index} <- config.extras |> Enum.with_index do %>
       <navPoint id="<%= extra_title(extra) %>" playOrder="<%= index + 2 %>">
         <navLabel>
         <text><%= extra_title(extra) %></text>

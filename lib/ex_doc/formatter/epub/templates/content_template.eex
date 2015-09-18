@@ -13,12 +13,20 @@
     <item id="nav" href="nav.html" media-type="application/xhtml+xml" properties="nav"/>
     <item id="cover" href="title.html" media-type="application/xhtml+xml"/>
     <%= for extra <- config.extras do %>
-      <item id="<% extra_title(extra) %>" href="modules/<%= extra_title(extra) %>.html" media-type="application/xhtml+xml"/>
+      <item id="<%= extra_title(extra) %>" href="modules/<%= extra_title(extra) %>.html" media-type="application/xhtml+xml"/>
     <% end %>
     <%= for node <- nodes do %>
       <item id="<%= node.id %>" href="modules/<%= node.id %>.html" media-type="application/xhtml+xml"/>
     <% end %>
     <item id="css" href="css/stylesheet.css" media-type="text/css"/>
+    <%= if config.logo do %>
+      <%= if Path.extname(config.logo) == ".png" do %>
+        <item id="cover-image" href="assets/logo.png" media-type="image/png"/>
+      <% end %>
+      <%= if Path.extname(config.logo) == ".jpg" do %>
+        <item id="cover-image" href="assets/logo.jpg" media-type="image/jpeg"/>
+      <% end %>
+    <% end %>
   </manifest>
   <spine toc="ncx">
     <itemref idref="cover" linear="no"/>

@@ -24,7 +24,7 @@ defmodule ExDoc.Formatter.HTML do
     protocols  = filter_list(:protocols, all)
 
     if config.logo do
-      config = process_logo_metadata(config)
+      config = process_logo_metadata(config, "#{config.output}/assets")
     end
 
     extras = generate_extras(output, module_nodes, modules, exceptions, protocols, config)
@@ -144,8 +144,8 @@ defmodule ExDoc.Formatter.HTML do
     |> String.replace(~r/\W+/, "-")
   end
 
-  defp process_logo_metadata(config) do
-    output = "#{config.output}/assets"
+  @spec process_logo_metadata(%ExDoc.Config{}, String.t) :: %ExDoc.Config{}
+  def process_logo_metadata(config, output) do
     File.mkdir_p! output
     file_extname = Path.extname(config.logo) |> String.downcase
 
